@@ -27,8 +27,8 @@ jobs:
       # 安装 hexo
       - name: npm install
         run: |
-          npm install -g hexo-cli
-          npm install
+          npm install -f -g hexo-cli
+          npm install -f
         env:
           CI: true
 
