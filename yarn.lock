@@ -772,11 +772,6 @@
   "resolved" "https://registry.npmjs.org/hexo-theme-fluid/-/hexo-theme-fluid-1.8.14.tgz"
   "version" "1.8.14"
 
-"hexo-theme-landscape@^0.0.3":
-  "integrity" "sha1-h9H01hPam+UkXa0NS4BHnqtw04Y="
-  "resolved" "https://registry.npm.taobao.org/hexo-theme-landscape/download/hexo-theme-landscape-0.0.3.tgz"
-  "version" "0.0.3"
-
 "hexo-util@^2.0.0", "hexo-util@^2.4.0", "hexo-util@^2.5.0":
   "integrity" "sha1-3lY1NBEWuiVjp4mg6861WodSIa0="
   "resolved" "https://registry.nlark.com/hexo-util/download/hexo-util-2.5.0.tgz"
