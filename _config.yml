@@ -1,9 +1,9 @@
 # Hexo Configuration
-## Docs: https://hexo.io/docs/configuration.html
+## Docs: https://hexo.io/zh-cn/docs/configuration
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: '秋天的风'
+title: 秋天的风
 subtitle: ''
 description: ''
 keywords:
@@ -12,9 +12,9 @@ language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
-## Set your site url here. For example, if you use GitHub Page, set url as 'https://username.github.io/project'
-url: https://www.yxuefeng.com
-permalink: posts/:abbrlink/
+url: http://www.yxuefeng.com
+# 文章的永久链接 https://hexo.io/zh-cn/docs/permalinks
+permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
   trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
@@ -31,9 +31,9 @@ i18n_dir: :lang
 skip_render:
 
 # Writing
-new_post_name: :title.md # File name of new posts
+new_post_name: :title.md
 default_layout: post
-titlecase: false # Transform title into titlecase
+titlecase: false
 external_link:
   enable: true # Open external links in new tab
   field: site # Apply to the whole site
@@ -97,26 +97,9 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-# theme: landscape
 theme: fluid
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
 deploy:
   type: ''
-
-# AbbrLink 短连接
-abbrlink:
-  auto_category:
-    alg: crc32 # crc16(default) and crc32
-    rep: hex   # dec(default) and hex
-    drafts: false   #(true)Process draft,(false)Do not process draft. false(default)
-    # Generate categories from directory-tree
-    # depth: the max_depth of directory-tree you want to generate, should > 0
-    auto_category:
-      enable: true  #true(default)
-      depth:        #3(default)
-      over_write: false
-    auto_title: false #enable auto title, it can auto fill the title by path
-    auto_date: false #enable auto date, it can auto fill the date by time today
-    force: false #enable force mode,in this mode, the plugin will ignore the cache, and calc the abbrlink for every post even it already had abbrlink.

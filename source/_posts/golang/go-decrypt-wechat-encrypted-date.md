@@ -1,12 +1,12 @@
 ---
-title: 微信数据解密
+title: Go实现微信加密数据解密算法
 categories: Golang
 tags:
   - 微信
+  - 小程序
   - base64
   - aes
-abbrlink: 57338
-date: 2021-09-10 15:00:00
+date: 2022-01-20 10:00:00
 ---
 
 Go 语言如何解密小程序中微信服务器的加密数据。
@@ -166,4 +166,3 @@ func (c *WXBizDataCrypt) pkcs7UnPadding(data []byte) {
     return data[:(length - unPadding)]
 }
 ```
-
