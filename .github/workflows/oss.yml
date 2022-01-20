@@ -1,4 +1,4 @@
-name: deploy blog to cloud
+name: deploy blog to aliyun oss
 on:
   push:
     branches:
@@ -13,17 +13,12 @@ jobs:
       - name: checkout main
         uses: actions/checkout@master
 
-      # 下载 git submodule
-      - uses: srt32/git-actions@v0.0.3
-        with:
-          args: git submodule update --init --recursive
-
       # 安装 node:10
       - name: use Node.js 14
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-
+      
       # 安装 hexo
       - name: npm install
         run: |
@@ -31,7 +26,7 @@ jobs:
           npm install -f
         env:
           CI: true
-
+      
       # 生成静态文件
       - name: hexo build
         run: |
@@ -39,14 +34,16 @@ jobs:
         env:
           CI: true
 
+      # 安装 ossutil
+      - uses: manyuanrong/setup-ossutil@v2.0
+        with:
+          endpoint: "oss-cn-guangzhou.aliyuncs.com"
+          access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+          access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
+      
       # 部署
-      - name: deploy
-        uses: easingthemes/ssh-deploy@v2
+      - name: depoly
+        run: |
+          ossutil cp -rf public oss://hexo-blog-yleoer/
         env:
-          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
-          ARGS: "-avz --delete"
-          SOURCE: "public/"
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: ${{ secrets.TARGET }}
+          CI: true

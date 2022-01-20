@@ -13,6 +13,8 @@ Go 语言如何解密小程序中微信服务器的加密数据。
 
 <!-- more -->
 
+## 概述
+
 根据 [微信官方文档](https://developers.weixin.qq.com/miniprogram/dev/framework/open-ability/signature.html#%E5%8A%A0%E5%AF%86%E6%95%B0%E6%8D%AE%E8%A7%A3%E5%AF%86%E7%AE%97%E6%B3%95) 的指南，后端解密需要小程序前端传递的数据包括：
 
 - 用户登录凭证 `code`，后端可以换取用户唯一标识 `openid` 和会话密钥 `session_key`。
