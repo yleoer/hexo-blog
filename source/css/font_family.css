@@ -1,0 +1,9 @@
+@font-face {
+    font-family: JetBrainsMono;
+    src: url(../ttf/JetBrainsMono-Regular.woff2);
+  }
+
+.markdown-body code, .markdown-body pre {
+    font-family: JetBrainsMono,SFMono-Regular,Consolas,Liberation Mono,Menlo,monospace;
+    font-size: 12px;
+}
