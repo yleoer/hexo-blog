@@ -1,14 +1,11 @@
 ---
 title: Golang 发送邮件
+excerpt: Go 语言通过 SMTP 协议发送邮件。
 tags: SMTP
 categories: Golang
 abbrlink: 58105
 date: 2021-08-23 15:55:39
 ---
-
-Go 语言通过 SMTP 协议发送邮件。
-
-<!-- more -->
 
 ## 配置 SMTP 服务
 
