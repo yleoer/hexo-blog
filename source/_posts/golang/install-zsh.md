@@ -4,7 +4,7 @@ excerpt: 如何在 CentOS 或 Ubuntu 系统中安装 zsh，并进行简单配置
 categories: Linux
 target:
   - zsh
-abbrlink: 36753
+abbrlink: ccdb6587
 date: 2021-11-22 11:00:00
 ---
 

@@ -3,7 +3,7 @@ title: Golang 发送邮件
 excerpt: Go 语言通过 SMTP 协议发送邮件。
 tags: SMTP
 categories: Golang
-abbrlink: 58105
+abbrlink: 65f50995
 date: 2021-08-23 15:55:39
 ---
 
@@ -13,9 +13,7 @@ date: 2021-08-23 15:55:39
 
 配置 SMTP 服务以 QQ 邮箱为例。
 
-登录 QQ 邮箱后，电点击左上方名字下的 “设置”，选择 “账户” 栏，下拉到 “POP3、IMAP...服务” 位置，选择开启  “POP3/SMTP 服务”，如图所示。
-
-![开启 SMTP 服务](https://river.yxuefeng.com/img/202108231619040.png)
+登录 QQ 邮箱后，电点击左上方名字下的 “设置”，选择 “账户” 栏，下拉到 “POP3、IMAP...服务” 位置，选择开启  “POP3/SMTP 服务”。
 
 开启 SMTP 服务后点击下方蓝色的 “生成授权码”，使用手机发送指定的短信后，获取到授权码，保存该授权码，发送邮件时需要。
 
