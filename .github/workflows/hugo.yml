@@ -6,6 +6,7 @@ on:
       - main
     paths:
       - 'source/**'
+      - '!source/_draft/**'
       - '_config.fluid.yml'
       - '_config.yml'
       - 'package.json'

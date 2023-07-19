@@ -4,6 +4,13 @@ on:
     branches:
       - master
       - main
+        paths:
+      - 'source/**'
+      - '!source/_draft/**'
+      - '_config.fluid.yml'
+      - '_config.yml'
+      - 'package.json'
+
 jobs:
   build:
     runs-on: ubuntu-latest
