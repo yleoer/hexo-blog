@@ -12,7 +12,7 @@ language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
-url: http://www.yxuefeng.com
+url: https://www.yxuefeng.com
 # 文章的永久链接 https://hexo.io/zh-cn/docs/permalinks
 # permalink: :year/:month/:day/:title/
 permalink: posts/:abbrlink.html

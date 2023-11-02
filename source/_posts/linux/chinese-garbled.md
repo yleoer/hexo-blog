@@ -4,7 +4,7 @@ excerpt: 解决 ls、git 无法正常显示中文的问题。
 tags:
   - ubuntu
 categories: Linux
-abbrlink: 76ae49e7
+abbrlink: 3dd87ec
 date: 2023-11-02 10:40:21
 ---
 
