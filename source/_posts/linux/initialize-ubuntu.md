@@ -150,6 +150,22 @@ sudo systemctl restart docker
 docker run --rm hello-world
 ```
 
+### 设置非 root 用户
+
+```bash
+# 创建名为 docker 的组
+sudo groupadd docker
+
+# 将当前用户加入 docker 组
+sudo gpasswd -a ${USER} docker
+
+# 重启 docker 服务
+sudo systemctl restart docker
+
+# 添加访问和执行权限
+sudo chmod a+rw /var/run/docker.sock
+```
+
 ## 生成 SSH 公钥
 
 服务器使用 SSH 公钥进行认证，所以需要使用 `ssh-keygen` 生成 SSH 公钥认证所需的公钥和私钥文件。
