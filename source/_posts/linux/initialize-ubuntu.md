@@ -312,71 +312,7 @@ GOROOT="/usr/local/go"
 
 ## Nodejs
 
-### apt 安装最新版本
-
-首先到 [Nodejs 官网](https://nodejs.org/zh-cn) 找到最新的版本号，按照对应的版本修改并添加源。
-
-```bash
-# 当前 LTS 版本为 18.17.0，所以 setup_{version} 为 setup_18
-curl -sL https://deb.nodesource.com/setup_18.x | sudo -E bash -
-sudo apt install -y nodejs
-```
-
-在我的虚拟机 Ubuntu 18.04 发现无法安装 18.17.0，错误提示为：
-
-```txt
-The following packages have unmet dependencies:
- nodejs : Depends: libc6 (>= 2.28) but 2.27-3ubuntu1.6 is to be installed
-E: Unable to correct problems, you have held broken packages.
-```
-
-于是我安装了上一个 LTS 版本：16.20.1。
-
-```bash
-curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt install -y nodejs
-```
-
-如果不需要了想删除源。
-
-```bash
-sudo rm -rf /etc/apt/sources.list.d/nodesource.list
-sudo apt update
-```
-
-### 二进制文件安装
-
-在 [官方下载页面](https://nodejs.org/zh-cn/download) 下载二进制压缩包，解压到指定目录，推荐 `/usr/local/` 或 `/opt/`。
-
-```bash
-tar -xvf node-v18.17.0-linux-x64.tar.xz
-sudo mv node-v18.17.0-linux-x64 /usr/local/node
-```
-
-在 `~/.bashrc` 或 `~/.zshrc` 更新 PATH。
-
-```bash
-export PATH=/usr/local/node/bin:$PATH
-```
-
-### 更新源
-
-更新 npm 为国内源，并安装 yarn。
-
-```bash
-npm config set registry https://registry.npm.taobao.org/
-npm install -g yarn
-yarn config set registry https://registry.npm.taobao.org/
-```
-
-### 安装 hexo
-
-全局安装 hexo-cli
-
-```bash
-yarn install -g hexo-cli
-```
+根据[官网](https://nodejs.org/en/download/current)文档进行安装。
 
 
 [^1]: [ssh-keygen 命令生成RSA、ed25519类型密钥对](https://blog.csdn.net/qq_27818541/article/details/125567360)
-[^2]: [Ubuntu 安装最新版本 Node.js](https://learnku.com/articles/42581)
