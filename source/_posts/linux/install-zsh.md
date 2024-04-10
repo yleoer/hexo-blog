@@ -73,10 +73,16 @@ git clone https://github.com/zsh-users/zsh-autosuggestions.git
 编辑 *~/.zshrc* 文件：
 
 ```
-plugins=(
-	git
-	wd
-	zsh-syntax-highlighting
-	zsh-autosuggestions
-)
+plugins=(git wd zsh-syntax-highlighting zsh-autosuggestions)
+
+# 不解析通配符 *
+setopt no_nomatch
 ```
+
+# 添加 kubectl 自动补全
+
+```bash
+mkdir ~/.oh-my-zsh/custom/plugins/kubectl
+kubectl completion zsh > ~/.oh-my-zsh/custom/plugins/kubectl/kubectl.zsh
+```
+最后在 *~/.zshrc* 文件添加 `kubectl` 插件即可。
