@@ -25,6 +25,9 @@ apt -y install zsh
 
 # 设置为默认 shell
 chsh -s /bin/zsh
+
+# chsh not found
+yum install -y util-linux-user
 ```
 
 ## 安装 oh-my-zsh
