@@ -21,7 +21,7 @@ dnf makecache
 
 安装 zsh
 ```bash
-dnf install -y zsh
+dnf install -y zsh util-linux-user
 chsh -s /bin/zsh
 
 dnf install -y wget jq psmisc vim net-tools telnet yum-utils device-mapper-persistent-data lvm2 git
