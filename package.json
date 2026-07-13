@@ -21,7 +21,7 @@
     "hexo-generator-tag": "^2.0.0",
     "hexo-renderer-marked": "^7.0.1",
     "hexo-server": "^3.0.0",
-    "hexo-theme-shiro": "^1.5.2"
+    "hexo-theme-shiro": "^1.6.0"
   },
   "devDependencies": {
     "pagefind": "^1.5.2"
