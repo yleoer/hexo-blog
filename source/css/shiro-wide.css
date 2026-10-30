@@ -1,11 +1,3 @@
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("../ttf/JetBrainsMono-Regular.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400;
-  font-display: swap;
-}
-
 /* Claude-inspired site overrides. The theme markup stays intact; these tokens
    deliberately replace Shiro's paper-card treatment with a quiet reading page. */
 :root {
@@ -14,21 +6,28 @@
   --claude-inset: #efeeeb;
   --claude-ink: #121212;
   --claude-body: #121212;
-  --claude-muted: #7b7974;
+  --claude-muted: #6f6d67;
   --claude-border: rgb(11 11 11 / 10%);
   --claude-border-strong: #cdcdc9;
   --claude-accent: #d97757;
   --claude-accent-text: #ae5630;
   --claude-accent-dark: #9a4a28;
   --claude-code-keyword: #7b2ff7;
-  --claude-code-string: #2f8f2f;
-  --claude-code-number: #c06a2a;
+  --claude-code-string: #337733;
+  --claude-code-number: #a35220;
   --claude-code-symbol: #2c5ec6;
+  --site-reading-width: 48rem;
+  --site-article-width: var(--site-reading-width);
+  --site-shell-width: 70rem;
 
-  --font-serif: "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-title: "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-eng: "Noto Sans SC", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-  --font-code: "JetBrains Mono", "Fira Code", "Cascadia Code", ui-monospace, monospace;
+  /* Latin first, then CJK: each script uses its intended face. Keep the
+     theme's legacy font tokens as aliases so every shared component agrees. */
+  --font-cjk: "Noto Sans SC", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+  --font-body: "Inter", var(--font-cjk);
+  --font-serif: var(--font-body);
+  --font-title: var(--font-body);
+  --font-eng: var(--font-body);
+  --font-code: "JetBrains Mono", "SFMono-Regular", "Cascadia Mono", Consolas, "Liberation Mono", "Noto Sans SC", "PingFang SC", "Microsoft YaHei", monospace;
 
   --color-paper: var(--claude-bg);
   --color-ink: var(--claude-ink);
@@ -49,8 +48,8 @@
   --color-text-heading: var(--claude-ink);
   --color-text-body: var(--claude-body);
   --color-text-muted: var(--claude-muted);
-  --color-text-subtle: #9c9a92;
-  --color-text-faint: #bbb9b3;
+  --color-text-subtle: var(--claude-muted);
+  --color-text-faint: var(--claude-muted);
   --color-border-strong: var(--claude-border-strong);
   --color-border-decorative: var(--claude-border);
   --color-bg-panel: var(--claude-panel);
@@ -66,8 +65,8 @@
   --color-slate-100: #f4f4f1;
   --color-slate-200: rgb(11 11 11 / 10%);
   --color-slate-300: #cdcdc9;
-  --color-slate-400: #9c9a92;
-  --color-slate-500: #7b7974;
+  --color-slate-400: var(--claude-muted);
+  --color-slate-500: var(--claude-muted);
   --color-slate-600: #55544f;
   --color-slate-700: #373734;
   --color-slate-800: #242423;
@@ -76,7 +75,9 @@
 
 html {
   background: var(--claude-bg);
-  font-size: 16px;
+  font-size: 100%;
+  scrollbar-gutter: stable;
+  scroll-padding-top: 2rem;
 }
 
 body,
@@ -84,18 +85,58 @@ button,
 input,
 select,
 textarea {
-  font-family: var(--font-serif);
+  font-family: var(--font-body);
+  font-synthesis: style;
 }
 
 body.fog-bg {
   background: var(--claude-bg);
   color: var(--claude-body);
+  font-variant-numeric: normal;
+}
+
+time,
+.oldstyle-nums,
+.prose-shiro table {
   font-variant-numeric: lining-nums tabular-nums;
 }
 
-body.fog-bg::before,
-#shiroPreloader,
-.site-note {
+pre,
+code,
+kbd,
+samp {
+  font-family: var(--font-code);
+  font-variant-ligatures: none;
+}
+
+body > .min-h-full {
+  padding-top: clamp(1.5rem, 4vw, 3.5rem);
+}
+
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--claude-accent-text);
+  outline-offset: 4px;
+  box-shadow: none;
+}
+
+.skip-link {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+  padding: 0.75rem 1rem;
+  color: var(--claude-ink);
+  background: var(--claude-panel);
+  border: 1px solid var(--claude-border-strong);
+  border-radius: 4px;
+  transform: translateY(calc(-100% - 2rem));
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+body.fog-bg::before {
   display: none !important;
 }
 
@@ -128,6 +169,8 @@ body.fog-bg::before,
 }
 
 .paper {
+  max-width: var(--site-shell-width);
+  padding-top: 0;
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -139,6 +182,7 @@ body.fog-bg::before,
 }
 
 .paper > header {
+  padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--claude-border);
 }
 
@@ -179,25 +223,116 @@ body.fog-bg::before,
   box-shadow: none;
 }
 
-nav[aria-label] a {
+.site-nav {
+  margin-top: 1.25rem;
+}
+
+.site-nav a {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  padding: 0.5rem 0.65rem;
   color: var(--claude-body);
   border-bottom: 1px solid transparent;
   border-radius: 0;
   letter-spacing: 0;
 }
 
-nav[aria-label] a:hover,
-nav[aria-label] a[aria-current="page"] {
+.site-nav a:hover,
+.site-nav a[aria-current] {
   color: var(--claude-accent-dark);
   background: transparent;
   border-bottom-color: currentColor;
 }
 
+.site-nav a[aria-current] {
+  font-weight: 600;
+}
+
+.site-nav-external {
+  width: 0.75rem;
+  height: 0.75rem;
+  color: var(--claude-muted);
+}
+
+.site-nav-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.25rem 1.25rem;
+}
+
+#menuBtn {
+  min-height: 2.75rem;
+  padding: 0.5rem 1rem;
+  color: var(--claude-body);
+  background: transparent;
+  border: 1px solid var(--claude-border-strong);
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.menu-panel[data-open="false"],
+.toc-inline .toc-body[data-open="false"] {
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.menu-panel[data-open="true"],
+.toc-inline .toc-body[data-open="true"] {
+  visibility: visible;
+}
+
+#mobileMenu ul {
+  background: var(--claude-panel);
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+#mobileMenu a {
+  display: flex;
+}
+
 main.section-divider {
+  margin-top: 3.5rem;
+  padding-top: 0;
   border: 0;
 }
 
-main.section-divider::before,
+main.section-divider > article,
+main.section-divider > section {
+  width: 100%;
+  max-width: var(--site-reading-width);
+  margin-inline: auto;
+}
+
+main.section-divider > article,
+main.section-divider > article > .prose-shiro {
+  max-width: var(--site-article-width);
+}
+
+main.section-divider > article > header h2 {
+  font-size: clamp(1.3rem, 2.2vw, 1.65rem);
+  line-height: 1.45;
+  text-wrap: balance;
+}
+
+main.section-divider > article > header h2 a:hover {
+  color: var(--claude-accent-dark);
+}
+
+main.section-divider > article + div[aria-hidden="true"] {
+  max-width: var(--site-article-width);
+  margin: 2.5rem auto;
+  border-top: 1px solid var(--claude-border);
+}
+
+main.section-divider > article + div[aria-hidden="true"] > * {
+  display: none;
+}
+
 .section-divider::before {
   display: none;
 }
@@ -228,6 +363,10 @@ main.section-divider::before,
 .section-title,
 .page-title {
   margin-bottom: 0.8rem;
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  line-height: 1.4;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .prose-shiro h1 {
@@ -268,11 +407,36 @@ main.section-divider::before,
 }
 
 .prose-shiro {
+  max-width: min(var(--site-reading-width), 75ch);
   color: var(--claude-body);
-  font-family: var(--font-serif);
-  font-size: 1rem;
-  line-height: 1.8;
+  font-family: var(--font-body);
+  font-size: 1.0625rem;
+  line-height: 1.9;
   letter-spacing: 0;
+  overflow-wrap: anywhere;
+}
+
+.prose-shiro :where(h1, h2, h3, h4, h5, h6) {
+  scroll-margin-top: 2rem;
+  text-wrap: balance;
+}
+
+.prose-shiro p,
+.prose-shiro li {
+  text-wrap: pretty;
+}
+
+.prose-shiro > :first-child {
+  margin-top: 0;
+}
+
+.prose-shiro > :last-child {
+  margin-bottom: 0;
+}
+
+.prose-shiro p a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--claude-accent-text) 45%, transparent);
 }
 
 .prose-shiro p,
@@ -342,7 +506,7 @@ main.section-divider::before,
   color: var(--claude-body);
   font-style: normal;
   background: var(--claude-inset);
-  border-inline-start: 4px solid var(--claude-accent);
+  border-inline-start: 1px solid var(--claude-accent);
   border-radius: 0 6px 6px 0;
   box-shadow: none;
 }
@@ -357,7 +521,7 @@ main.section-divider::before,
   color: #a8433b;
   font-family: var(--font-code);
   font-size: 0.88em;
-  font-weight: 600;
+  font-weight: 400;
   background: transparent;
   border: 0;
   border-radius: 0;
@@ -400,7 +564,24 @@ main.section-divider::before,
   border-collapse: separate;
   border-spacing: 0;
   border-radius: 6px;
-  box-shadow: 0 2px 10px rgb(18 18 18 / 4%);
+  box-shadow: none;
+}
+
+.prose-shiro > table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+}
+
+.prose-shiro > table :is(th, td) {
+  min-width: 7rem;
+}
+
+.prose-shiro > table :is(th, td):first-child {
+  white-space: nowrap;
 }
 
 .prose-shiro th,
@@ -432,7 +613,35 @@ main.section-divider::before,
   background: var(--claude-panel);
   border: 1px solid #e6e6e2;
   border-radius: 6px;
-  box-shadow: 0 1px 4px rgb(18 18 18 / 3%);
+  box-shadow: none;
+  overscroll-behavior-x: contain;
+}
+
+.prose-shiro .highlight pre {
+  padding: 1.25rem 4.25rem 1.25rem 1.25rem;
+  font-family: var(--font-code);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  tab-size: 4;
+  overflow-wrap: normal;
+}
+
+.highlight-wrapper > .copy-btn {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  color: var(--claude-muted);
+  background: var(--claude-panel);
+  border-color: var(--claude-border);
+  border-radius: 4px;
+  box-shadow: none;
+}
+
+.highlight-wrapper > .copy-btn:focus-visible {
+  opacity: 1;
+}
+
+.highlight-wrapper > .code-lang {
+  color: var(--claude-muted);
 }
 
 .prose-shiro .highlight table {
@@ -502,6 +711,7 @@ main.section-divider::before,
 }
 
 .tag-pill {
+  min-height: 2.75rem;
   color: var(--claude-accent-text);
   background: rgb(217 119 87 / 10%);
   border: 0;
@@ -514,6 +724,7 @@ main.section-divider::before,
 }
 
 .btn-ink {
+  min-height: 2.75rem;
   padding: 0.55rem 0.9rem;
   color: var(--claude-ink);
   background: transparent;
@@ -524,8 +735,8 @@ main.section-divider::before,
 
 .btn-ink:hover {
   color: #fff;
-  background: var(--claude-accent);
-  border-color: var(--claude-accent);
+  background: var(--claude-accent-dark);
+  border-color: var(--claude-accent-dark);
   box-shadow: none;
 }
 
@@ -575,6 +786,8 @@ main.section-divider::before,
 }
 
 footer.section-divider {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
   color: var(--claude-muted);
   border-top: 1px solid var(--claude-border);
 }
@@ -615,16 +828,31 @@ footer.section-divider {
 }
 
 .back-to-top {
+  width: 2.75rem;
+  height: 2.75rem;
   color: #fff;
-  background: var(--claude-accent);
-  border-color: var(--claude-accent);
+  background: var(--claude-accent-text);
+  border: 0;
   border-radius: 4px;
   box-shadow: 0 2px 8px rgb(18 18 18 / 14%);
 }
 
-/* Keep the site's original reading-column geometry. Shiro expands code blocks
-   on desktop by default; this is the pre-existing site override that keeps
-   their left and right edges aligned with article content. */
+.back-to-top:hover {
+  color: #fff;
+  background: var(--claude-accent-dark);
+}
+
+.back-to-top[data-visible="false"] {
+  visibility: hidden;
+}
+
+.post-nav-link {
+  min-height: 2.75rem;
+  overflow-wrap: anywhere;
+}
+
+/* Override the theme's full-bleed code blocks so code and prose share the
+   reading column before and after the clipboard enhancement loads. */
 .prose-shiro .highlight:not(.not-prose),
 .highlight-wrapper {
   width: 100%;
@@ -632,64 +860,94 @@ footer.section-divider {
   margin-right: 0;
 }
 
+main.section-divider .space-y-16.max-w-2xl {
+  max-width: var(--site-reading-width);
+}
+
 @media (min-width: 1024px) {
-  .paper {
-    max-width: 72rem;
+  .paper:has(main.section-divider > article) {
+    --site-shell-width: 72rem;
+    --site-article-width: 58rem;
   }
 
-  .prose-shiro .highlight:not(.not-prose),
-  .highlight-wrapper {
-    width: 100%;
-    margin-left: 0;
-    margin-right: 0;
-  }
-
-  .prose-shiro {
-    max-width: 58rem;
-  }
-
-  main.section-divider > .max-w-3xl {
-    max-width: 58rem;
-  }
-
-  main.section-divider .space-y-16.max-w-2xl {
-    max-width: 54rem;
+  .prose-shiro > table {
+    display: table;
   }
 }
 
 @media (min-width: 1280px) {
-  .paper {
-    max-width: 80rem;
-  }
-
-  .prose-shiro {
-    max-width: 64rem;
-  }
-
-  main.section-divider > .max-w-3xl {
-    max-width: 64rem;
-  }
-
-  main.section-divider .space-y-16.max-w-2xl {
-    max-width: 58rem;
+  .paper:has(main.section-divider > article) {
+    --site-shell-width: 80rem;
+    --site-article-width: 64rem;
   }
 }
 
 @media (max-width: 767px) {
-  .site-title {
-    font-size: 2rem;
+  .paper {
+    padding-inline: 0.5rem;
   }
 
-  .section-title,
-  .page-title,
+  .paper > header {
+    padding-bottom: 1.25rem;
+  }
+
+  .site-title {
+    font-size: 1.8rem;
+  }
+
+  main.section-divider {
+    margin-top: 2.25rem;
+  }
+
+  main.section-divider > article > header {
+    margin-bottom: 1.5rem;
+  }
+
   .prose-shiro h1 {
-    font-size: 1.9rem;
+    font-size: 1.7rem;
   }
 
   .prose-shiro h2 {
     font-size: 1.5rem;
   }
 
+  .prose-shiro {
+    font-size: 1rem;
+  }
+
+  .prose-shiro .highlight pre {
+    padding: 1rem 4.25rem 1rem 1rem;
+  }
+
+  main.section-divider .space-y-4 > article {
+    flex-direction: column;
+    gap: 0.25rem;
+    padding-block: 0.5rem;
+  }
+
+  main.section-divider .space-y-4 > article time {
+    width: auto;
+    text-align: left;
+  }
+
+  .back-to-top {
+    right: 1rem;
+    bottom: max(1rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 html[data-theme="dark"] {
